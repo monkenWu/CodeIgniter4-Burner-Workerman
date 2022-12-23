@@ -1,0 +1,47 @@
+{
+    "name": "monken/codeigniter4-burner-workerman",
+    "description": "CodeIgniter4 out-of-the-box high-performance server, Workerman Driver.",
+    "keywords": [
+		"codeigniter",
+		"codeigniter4",
+		"Workerman",
+		"high-performance",
+		"server",
+		"burner"
+	],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MonkenWu",
+            "homepage": "https://github.com/monkenWu"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.0 || ^8.1 || ^8.2",
+        "monken/codeigniter4-burner" : "^0.3",
+        "workerman/workerman": "^4.1",
+        "ext-pcntl": "*",
+        "ext-posix": "*"
+    },
+    "suggest": {
+        "ext-event": "Get better execution performance"
+    },
+    "autoload": {
+		"psr-4": {
+			"Monken\\CIBurner\\Workerman\\": "src/"
+		}
+	},
+    "require-dev": {
+        "codeigniter/coding-standard": "^1.4",
+        "rector/rector": "0.12.16"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "composer/package-versions-deprecated": true
+        }
+    }
+}
