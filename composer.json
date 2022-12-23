@@ -21,8 +21,13 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0 || ^8.1 || ^8.2",
-        "monken/codeigniter4-burner" : "*",
-        "workerman/workerman": "^4.1"
+        "monken/codeigniter4-burner" : "^0.3",
+        "workerman/workerman": "^4.1",
+        "ext-pcntl": "*",
+        "ext-posix": "*"
+    },
+    "suggest": {
+        "ext-event": "Get better execution performance"
     },
     "autoload": {
 		"psr-4": {
@@ -31,8 +36,7 @@
 	},
     "require-dev": {
         "codeigniter/coding-standard": "^1.4",
-        "rector/rector": "0.12.16",
-        "openswoole/ide-helper": "@dev"
+        "rector/rector": "0.12.16"
     },
     "config": {
         "allow-plugins": {
