@@ -21,7 +21,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0 || ^8.1 || ^8.2",
-        "monken/codeigniter4-burner" : "^0.3",
+        "monken/codeigniter4-burner" : "^0.4",
         "workerman/workerman": "^4.1",
         "ext-pcntl": "*",
         "ext-posix": "*"
