@@ -31,44 +31,57 @@ php spark burner:init Workerman
 When you do not pass in any parameters, the server is preset to start in debug mode.
 
 ```
-php spark burner:start Workerman
+php spark burner:start
 ```
 
-### debug mode
+By default, burner reads the default driver written in `app/Burner.php`. Of course, you can force Burner to execute commands with the `Workerman` driver by using a parameter like this：
 
 ```
-php spark burner:start Workerman start
+php spark burner:start --driver Workerman
 ```
+
+> `--driver Workerman` This parameter also applies to all the commands mentioned below.
+
 
 ### daemon mode
 
 ```
-php spark burner:start Workerman start -d
+php spark burner:start --daemon
 ```
 
 ### stop server
 
 ```
-php spark burner:start Workerman stop
+php spark burner:stop
 ```
 
 ### restart server
 
 ```
-php spark burner:start Workerman restart
+php spark burner:restart
 ```
 
-### smooth restart
+### reload server
 
 ```
-php spark burner:start Workerman reload
+php spark burner:reload
 ```
 
 ### server status
 
 ```
-php spark burner:start Workerman status
+php spark burner:workerman status
 ```
+
+### more command
+
+Run commands directly to Workerman's entry php file.
+
+```
+php spark burner:workerman [workerman_comands]
+```
+
+You can refer to the official [Workerman documentation](https://github.com/walkor/workerman#available-commands) to construct your commands. 
 
 ## Workerman Server Settings
 
