@@ -44,6 +44,9 @@ $webWorker = new Worker(
 $webWorker->name = 'CodeIgniter4';
 Config::instanceSetting($webWorker, $workermanConfig);
 
+// init burner
+\Monken\CIBurner\App::setConfig(config('Burner'));
+
 // Worker 進入點
 $webWorker->onMessage = static function (TcpConnection $connection, Request $request) use ($workermanConfig) {
     $workermanConfig->runtimeTcpConnection($connection);
