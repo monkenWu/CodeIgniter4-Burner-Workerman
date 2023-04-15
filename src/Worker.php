@@ -1,13 +1,15 @@
 <?php
 
-$f = array_pop($argv);
-$f = str_replace('-f=', '', $f);
+$a = str_replace('-a=', '', array_pop($argv));
+$f = str_replace('-f=', '', array_pop($argv));
 
+define('APPPATH', $a);
 require_once $f;
 
-define('BURNER_DRIVER', 'WorkerMan');
+define('BURNER_DRIVER', 'Workerman');
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Events\Events;
 use Monken\CIBurner\Workerman\Config;
 use Nyholm\Psr7\ServerRequest as PsrRequest;
 use Workerman\Connection\TcpConnection;
@@ -87,6 +89,7 @@ $webWorker->onMessage = static function (TcpConnection $connection, Request $req
     );
 
     $connection->send($workermanResponse);
+    Events::trigger('burnerAfterSendResponse', $connection);
     \Monken\CIBurner\App::clean();
 };
 

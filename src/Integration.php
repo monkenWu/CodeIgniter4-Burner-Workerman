@@ -26,7 +26,7 @@ class Integration implements IntegrationInterface
             exit;
         }
 
-        $basePath   = ROOTPATH . 'app/Config' . DIRECTORY_SEPARATOR;
+        $basePath   = APPPATH . '/Config' . DIRECTORY_SEPARATOR;
         $configPath = $basePath . 'Workerman.php';
 
         if (file_exists($configPath)) {
@@ -44,11 +44,12 @@ class Integration implements IntegrationInterface
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
+        $appPath = APPPATH;
         if ($daemon) {
             self::writeIsDaemon();
-            $start = popen("php {$workerPath} start -d -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} start -d -f={$frontLoader} -a={$appPath}", 'w');
         } else {
-            $start = popen("php {$workerPath} start -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} start -f={$frontLoader} -a={$appPath}", 'w');
         }
         pclose($start);
         echo PHP_EOL;
