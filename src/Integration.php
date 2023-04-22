@@ -26,7 +26,7 @@ class Integration implements IntegrationInterface
             exit;
         }
 
-        $basePath   = ROOTPATH . 'app/Config' . DIRECTORY_SEPARATOR;
+        $basePath   = APPPATH . '/Config' . DIRECTORY_SEPARATOR;
         $configPath = $basePath . 'Workerman.php';
 
         if (file_exists($configPath)) {
@@ -44,22 +44,27 @@ class Integration implements IntegrationInterface
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
+        $appPath    = APPPATH;
         if ($daemon) {
             self::writeIsDaemon();
-            $start = popen("php {$workerPath} start -d -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} start -d -f={$frontLoader} -a={$appPath}", 'w');
         } else {
-            $start = popen("php {$workerPath} start -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} start -f={$frontLoader} -a={$appPath}", 'w');
         }
         pclose($start);
-        echo PHP_EOL;
+        if (self::needRestart()) {
+            echo PHP_EOL . PHP_EOL;
+            $this->startServer($frontLoader, $daemon, '-r=restart');
+        }
     }
 
     public function stopServer(string $frontLoader, string $commands = '')
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
+        $appPath    = APPPATH;
         self::isDaemon();
-        $start = popen("php {$workerPath} stop -f={$frontLoader}", 'w');
+        $start = popen("php {$workerPath} stop -f={$frontLoader} -a={$appPath}", 'w');
         pclose($start);
         echo PHP_EOL;
     }
@@ -68,10 +73,11 @@ class Integration implements IntegrationInterface
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
+        $appPath    = APPPATH;
         if (self::isDaemon(false)) {
-            $start = popen("php {$workerPath} restart -d -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} restart -d -f={$frontLoader} -a={$appPath}", 'w');
         } else {
-            $start = popen("php {$workerPath} restart -f={$frontLoader}", 'w');
+            $start = popen("php {$workerPath} restart -f={$frontLoader} -a={$appPath}", 'w');
         }
         pclose($start);
         echo PHP_EOL;
@@ -81,7 +87,8 @@ class Integration implements IntegrationInterface
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
-        $start      = popen("php {$workerPath} reload -f={$frontLoader}", 'w');
+        $appPath    = APPPATH;
+        $start      = popen("php {$workerPath} reload -f={$frontLoader} -a={$appPath}", 'w');
         pclose($start);
         echo PHP_EOL;
     }
@@ -93,6 +100,12 @@ class Integration implements IntegrationInterface
         $baseDir     = sys_get_temp_dir() . DIRECTORY_SEPARATOR;
 
         return sprintf('%s%s_%s', $baseDir, $projectHash, $fileName);
+    }
+
+    public static function writeRestartSignal()
+    {
+        $temp = self::getTempFilePath('burner_workerman_restart.tmp');
+        file_put_contents($temp, 'restart');
     }
 
     public static function writeIsDaemon()
@@ -118,11 +131,27 @@ class Integration implements IntegrationInterface
         return $result;
     }
 
+    public static function needRestart(): bool
+    {
+        $temp   = self::getTempFilePath('burner_workerman_restart.tmp');
+        $result = false;
+        if (is_file($temp)) {
+            $text = file_get_contents($temp);
+            if ($text === 'restart') {
+                $result = true;
+            }
+            unlink($temp);
+        }
+
+        return $result;
+    }
+
     public function runCmd(string $frontLoader, string $commands = '')
     {
         $nowDir     = __DIR__;
         $workerPath = $nowDir . DIRECTORY_SEPARATOR . 'Worker.php';
-        $start      = popen("php {$workerPath} {$commands} -f={$frontLoader}", 'w');
+        $appPath    = APPPATH;
+        $start      = popen("php {$workerPath} {$commands} -f={$frontLoader} -a={$appPath}", 'w');
         pclose($start);
         echo PHP_EOL;
     }

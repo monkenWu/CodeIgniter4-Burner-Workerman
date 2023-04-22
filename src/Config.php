@@ -11,7 +11,6 @@ class Config
     {
         $worker->count      = $config->workerCount;
         $worker->user       = $config->workerUser;
-        $worker->reloadable = $config->autoReload;
         $config->initWorker($worker);
     }
 
