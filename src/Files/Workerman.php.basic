@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
+use Workerman\Protocols\Http\Request;
 
 class Workerman extends BaseConfig
 {
