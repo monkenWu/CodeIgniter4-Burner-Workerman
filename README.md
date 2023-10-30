@@ -15,8 +15,8 @@ This Library is the Workerman Driver for [CodeIgniter4 Burner](https://github.co
 ## Install
 
 ### Prerequisites
-1. CodeIgniter Framework 4.3.0^
-2. CodeIgniter4-Burner 1.0.0^
+1. CodeIgniter Framework 4.4.0^
+2. CodeIgniter4-Burner 1.0.0-beta.3
 3. Composer
 4. PHP8^
 5. Enable `php-pcntl` extension
@@ -28,7 +28,7 @@ This Library is the Workerman Driver for [CodeIgniter4 Burner](https://github.co
 You can install this Driver with the following command.
 
 ```
-composer require monken/codeigniter4-burner-workerman:1.0.0-beta.1
+composer require monken/codeigniter4-burner-workerman:1.0.0-beta.3
 ```
 
 Initialize Server files using built-in commands in the library
